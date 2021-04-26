@@ -39,12 +39,12 @@ public class LogoutServlet extends ChatServlet {
             }
             else{
                 // Пользователь пытается аннулировать чужую сессию –// неделатьничего
-                response.sendRedirect(response.encodeRedirectURL("/Laba8/view.html"));
+                response.sendRedirect(response.encodeRedirectURL("/Laba8/view.jsp"));
             }
         }
         else{
             // Перенаправить пользователя на главное окно чата
-            response.sendRedirect(response.encodeRedirectURL("/Laba8/view.html"));
+            response.sendRedirect(response.encodeRedirectURL("/Laba8/view.jsp"));
         }
     }
 }

@@ -135,7 +135,7 @@ public class LoginServlet extends ChatServlet {
             response.addCookie(sessionIdCookie);
             String systemMessage = " Пользователь " + aUser.getName() + " пришел в чат ";
             // Перейти к главному окну чата
-            response.sendRedirect(response.encodeRedirectURL("/Laba8/view.html"));
+            response.sendRedirect(response.encodeRedirectURL("/Laba8/view.jsp"));
             // Вернуть null, т.е. сообщений об ошибках нет
 
             synchronized (messages) {

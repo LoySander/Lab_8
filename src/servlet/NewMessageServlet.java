@@ -13,9 +13,9 @@ import entity.ChatUser;
 @WebServlet(name = "NewMessageServlet")
 public class NewMessageServlet extends ChatServlet {
     private static final long serialVersionUID = 1L;
-    private long time_permissible = 5;
-    private int amount_message = 2;
-    private int blocking = 10;
+    private static final long time_permissible = 10000;
+    private static final int amount_message = 2;
+    private static final long blocking = 1;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // По умолчанию используется кодировка ISO-8859. Так как мы
@@ -24,31 +24,49 @@ public class NewMessageServlet extends ChatServlet {
         request.setCharacterEncoding("UTF-8");
         // ИзвлечьизHTTP-запросапараметр'message'
         String message = (String)request.getParameter("message");
-        // Еслисообщениенепустое, то
+        // Если сообщение не пустое, то
+        int k = 0;
+        long z = 0;
+        long timelast = 0;
+
+       // timelast = author.getTimelast();
+       // if(timelast+blocking<=Calendar.getInstance().getTimeInMillis()){
         if(message!=null&& !"".equals(message)) {
-            int k = 0;
-            long z = 0;
-            // По имении зсессии получить ссылкуна объект ChatUser
+            // По имени из сессии получить ссылку на объект ChatUse
             ChatUser author = activeUsers.get((String) request.getSession().getAttribute("name"));
             for(int i = 0;i<=messages.size()-1;i++){
                 ChatMessage aMessage = messages.get(i);
                 if(author == aMessage.getAuthor()){
                     k++;
                     z = aMessage.getTimestamp() - z;
+                    timelast =aMessage.getTimestamp();
+                    System.out.println("последнее сообщение отправлено "+timelast);
+                    System.out.println("z "+ z);
+                    System.out.println("a "+ aMessage.getAuthor());
+                    System.out.println("a "+ author);
                 }
             }
-            if(k >= 2 && z >= time_permissible){
-                ///
+
+
+
+            author.setTimelast(timelast);
+            if(k >= 2 && z <= time_permissible){
+                String systemMessage = " Извините, но вы привысили лимит сообщений ";
+                synchronized (messages) {
+                    ChatMessage str = new ChatMessage(systemMessage, author, Calendar.getInstance().getTimeInMillis());
+                    messages.add(str);
+                }
             }
-            else{
+            else {
                 synchronized(messages) {
                     // Добавить всписок сообщений новое
                     messages.add(new ChatMessage(message, author, Calendar.getInstance().getTimeInMillis()));
                 }
             }
+
         }
         // Перенаправитьпользователянастраницусформойсообщения
-        response.sendRedirect("/Laba8/compose_message.html");
+        response.sendRedirect("/Laba8/compose_message.jsp");
     }
 }
 

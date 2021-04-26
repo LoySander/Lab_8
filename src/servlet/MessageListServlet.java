@@ -28,9 +28,9 @@ public class MessageListServlet extends ChatServlet {
                         + "</strong>" + aMessage.getMessage() + "</div>");
 
             } else {
-                pw.println("<div><strong>"+ aMessage.getAuthor().getName() + "</strong>: "+ aMessage.getMessage() + "</div>");
+                pw.println("<div><strong>"+ aMessage.getAuthor().getName() + "</strong>: "+ aMessage.getMessage() +  "</div>");
             }
-        }
+        }//"</strong>: "+ aMessage.getTimestamp()+"
         pw.println("</body></html>");
     }
 }
