@@ -37,8 +37,10 @@ public class NewMessageServlet extends ChatServlet {
             for(int i = 0;i<=messages.size()-1;i++){
                 ChatMessage aMessage = messages.get(i);
                 if(author == aMessage.getAuthor()){
-                    k++;
+                k++;
+                if(k>=2) {
                     z = aMessage.getTimestamp() - z;
+                }
                     timelast =aMessage.getTimestamp();
                     System.out.println("последнее сообщение отправлено "+timelast);
                     System.out.println("z "+ z);
@@ -46,7 +48,7 @@ public class NewMessageServlet extends ChatServlet {
                     System.out.println("a "+ author);
                 }
             }
-
+            System.out.println("------------------------ ");
 
 
             author.setTimelast(timelast);
